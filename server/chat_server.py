@@ -9,15 +9,15 @@ from server.chatting_service import ChattingService
 
 class ChatServer:
     """
-    Класс, реализующий сервер, который хостит наш сервис
+    a server that hostes our service
     """
-    def __init__(self, port=5000, host='[::]', max_workers=10):
+    def __init__(self, port=5000, host='[::]', max_workers=3):
         self._port = port
         self._host = host
-        # Сервер создаётся многопоточным c максимум max_workers потоками,
-        # но это не страшно, всей многопоточностью управляет gRPC
+        # The server is created by thread with maximum max_workers threads,
+        # all the thread-driven gRPC
         self._server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
-        # Говорим, что наш ChattingService реализует описанный в Proto сервис чата на этом сервере
+        # We say that our ChattingService implements the chat service described in Proto on this server
         chat_grpc.add_ChattingServicer_to_server(ChattingService(), self._server)
 
     def serve(self):
@@ -27,9 +27,10 @@ class ChatServer:
         print(f'Listening on {self._host}:{self._port}')
         print('Press CTRL+C to stop...')
         try:
-            # wait_for_termination ничего не делает (можно заменить на очень большой sleep), просто ждёт
-            # пока сервер не остановится, чтобы основной процесс программы не завершался.
+            # wait_for_termination does nothing (you can replace it with a very large sleep), just waiting
+            # Until the server stops, so that the main process of the program does not end.
             self._server.wait_for_termination()
         except KeyboardInterrupt:
             self._server.stop(None)
             print('Server is stopped')
+

@@ -5,59 +5,95 @@ from client.grpc_out import chat_pb2 as client_dot_grpc__out_dot_chat__pb2
 
 
 class ChattingStub(object):
-  """Сервис чата
-  """
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
+    """Chat service
     """
-    self.MessageStream = channel.unary_stream(
-        '/grpc.Chatting/MessageStream',
-        request_serializer=client_dot_grpc__out_dot_chat__pb2.Empty.SerializeToString,
-        response_deserializer=client_dot_grpc__out_dot_chat__pb2.Message.FromString,
-        )
-    self.SendMessage = channel.unary_unary(
-        '/grpc.Chatting/SendMessage',
-        request_serializer=client_dot_grpc__out_dot_chat__pb2.Message.SerializeToString,
-        response_deserializer=client_dot_grpc__out_dot_chat__pb2.Nothing.FromString,
-        )
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.MessageStream = channel.unary_stream(
+                '/grpc.Chatting/MessageStream',
+                request_serializer=client_dot_grpc__out_dot_chat__pb2.Empty.SerializeToString,
+                response_deserializer=client_dot_grpc__out_dot_chat__pb2.Message.FromString,
+                )
+        self.SendMessage = channel.unary_unary(
+                '/grpc.Chatting/SendMessage',
+                request_serializer=client_dot_grpc__out_dot_chat__pb2.Message.SerializeToString,
+                response_deserializer=client_dot_grpc__out_dot_chat__pb2.Nothing.FromString,
+                )
 
 
 class ChattingServicer(object):
-  """Сервис чата
-  """
-
-  def MessageStream(self, request, context):
-    """Функция, возвращающая ПОТОК сообщений чата
+    """Chat service
     """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
 
-  def SendMessage(self, request, context):
-    """Функция отправки сообщения в чат
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def MessageStream(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SendMessage(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_ChattingServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'MessageStream': grpc.unary_stream_rpc_method_handler(
-          servicer.MessageStream,
-          request_deserializer=client_dot_grpc__out_dot_chat__pb2.Empty.FromString,
-          response_serializer=client_dot_grpc__out_dot_chat__pb2.Message.SerializeToString,
-      ),
-      'SendMessage': grpc.unary_unary_rpc_method_handler(
-          servicer.SendMessage,
-          request_deserializer=client_dot_grpc__out_dot_chat__pb2.Message.FromString,
-          response_serializer=client_dot_grpc__out_dot_chat__pb2.Nothing.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'grpc.Chatting', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
+    rpc_method_handlers = {
+            'MessageStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.MessageStream,
+                    request_deserializer=client_dot_grpc__out_dot_chat__pb2.Empty.FromString,
+                    response_serializer=client_dot_grpc__out_dot_chat__pb2.Message.SerializeToString,
+            ),
+            'SendMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendMessage,
+                    request_deserializer=client_dot_grpc__out_dot_chat__pb2.Message.FromString,
+                    response_serializer=client_dot_grpc__out_dot_chat__pb2.Nothing.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'grpc.Chatting', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class Chatting(object):
+    """Chat service
+    """
+
+    @staticmethod
+    def MessageStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/grpc.Chatting/MessageStream',
+            client_dot_grpc__out_dot_chat__pb2.Empty.SerializeToString,
+            client_dot_grpc__out_dot_chat__pb2.Message.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SendMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpc.Chatting/SendMessage',
+            client_dot_grpc__out_dot_chat__pb2.Message.SerializeToString,
+            client_dot_grpc__out_dot_chat__pb2.Nothing.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)

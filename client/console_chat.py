@@ -2,10 +2,7 @@ from client.chat_client import ChatClient
 
 
 class ConsoleChat:
-    """
-        Класс консольного чата, который использует ChatClient.
-        Используя ChatClient можно легко сделать и другой чат, например, на Qt или PyGame.
-    """
+
     def __init__(self, chat_client: ChatClient):
         self.username: str = ''
         self._chat_client: ChatClient = chat_client
@@ -32,6 +29,6 @@ class ConsoleChat:
         except KeyboardInterrupt:
             pass
         print('Bye')
-        # Говорим клиенту отключиться от сервера.
-        # Вообще, это не обязательно, ведь наша программа итак завершается на этом моменте
+        # We tell the customer to disconnect from the server.
+        # In general, it is not necessary, because our program is already ending at this point
         self._chat_client.close()

@@ -1,6 +1,7 @@
 from server.chat_server import ChatServer
 
-# Строка [::] означает, что мы разрешаем подключение с любого хоста (любого IP и Hostname).
-# Можно явно написать localhost или 127.0.0.1, тогда будет работать только на одном компьютере.
+#The line means that we allow you to connect with any host (any IP and Hostname).
+#You can explicitly write a localhost or 127.0.0.1, then it will only work on one computer.
 chat_server = ChatServer(5000, '[::]')
 chat_server.serve()
+
